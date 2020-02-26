@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = new Router();
 const { Team } = require("./model");
+const { City } = require("../city/model");
 
 // router.get("/", (req, res) => res.redirect("/team"));
 
@@ -20,7 +21,7 @@ router.post("/team", (req, res, next) => {
 
 router.get("/team/:id", (req, res, next) => {
   const id = req.params.id;
-  Team.findByPk(id)
+  Team.findByPk(id, { include: [City] })
     .then(team => {
       if (team) {
         res.json(team);
