@@ -18,7 +18,7 @@ router.post("/team", (req, res, next) => {
     .catch(err => res.status(404).end());
 });
 
-router.get("/team/:id", (req, res) => {
+router.get("/team/:id", (req, res, next) => {
   const id = req.params.id;
   Team.findByPk(id)
     .then(team => {
@@ -28,9 +28,26 @@ router.get("/team/:id", (req, res) => {
         res.status(404).end();
       }
     })
-    .catch(err => {
-      return next(err);
-    });
+    .catch(next);
+});
+
+router.put("/team/:id", (req, res, next) => {
+  const id = req.params.id;
+  Team.findByPk(id)
+    .then(team => {
+      if (team) {
+        return team
+          .update({
+            ...team,
+            name: req.body.name
+          })
+          .then(team => res.json(team))
+          .catch(next);
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch(next);
 });
 
 module.exports = router;
