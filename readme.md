@@ -9,4 +9,7 @@
 Heroku create DB:
 
 1. heroku addons:create heroku-postgresql:hobby-dev
-2. You can test that the database is running with heroku pg:info
+2. You can test that the database is running with heroku pg:
+
+PostresQL no date:
+You can disable these fields if you want. Edit your model files and pass another argument to db.define. It should be an object with the property 'timestamps: false`.
