@@ -19,23 +19,28 @@ router.post("/", (req, res, next) => {
     .catch(next);
 });
 
-router.get("/teamname/:teamName", (req, res, next) => {
+router.get("/team/:teamName", (req, res, next) => {
   const teamName = req.params.teamName;
-  // Strange but it does not work!!!
-  // Team.findOne({ where: { name: teamName }, include: [Player] })
-  //   .then(team => {
-  //     console.log(team);
-  //     res.json(team);
-  //   })
-  //   .catch(next);
-  Team.findOne({ where: { name: teamName } }).then(team => {
-    Player.findAll({ where: { teamId: team.id } })
-      .then(players => {
-        res.json(players);
-      })
-      .catch(next);
-  });
+  console.log(teamName, "NAME");
+  // Second way to realize it! But in model of Player we shoul use: Team.hasMany(Player);
+
+  Team.findOne({ where: { name: teamName }, include: [Player] })
+    .then(team => {
+      console.log(team);
+      res.json(team);
+    })
+    .catch(next);
+
+  // Team.findOne({ where: { name: teamName } }).then(team => {
+  //   Player.findAll({ where: { teamId: team.id } })
+  //     .then(players => {
+  //       res.json(players);
+  //     })
+  //     .catch(next);
+  // });
 });
+
+router.get("/players/team");
 
 router.get("/cityname/:cityName", (req, res, next) => {
   const cityName = req.params.cityName;

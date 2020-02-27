@@ -9,6 +9,7 @@ const Player = db.define("player", {
 });
 
 Player.belongsTo(Team);
+Team.hasMany(Player);
 Player.belongsTo(City);
 
 module.exports = Player;
